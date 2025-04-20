@@ -1,0 +1,25 @@
+import sqlite3
+
+DB_FILE = 'logs.db'
+
+def show_logs():
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT id, timestamp, ip, user_agent, payload FROM injection_logs")
+    logs = cursor.fetchall()
+
+    if logs:
+        for log in logs:
+            print(f"\n[ID: {log[0]}]")
+            print(f"Timestamp  : {log[1]}")
+            print(f"IP Address : {log[2]}")
+            print(f"User-Agent : {log[3]}")
+            print(f"Payload    : {log[4]}")
+    else:
+        print("No logs found.")
+
+    conn.close()
+
+if __name__ == "__main__":
+    show_logs()
